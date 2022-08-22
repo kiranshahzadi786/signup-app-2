@@ -1,0 +1,144 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    
+    <h1>Signup Form</h1>
+
+
+    <form onsubmit="signup(); return false ">
+
+        <label for="firstName">First Name</label>
+        <input type="text" id="firstName" required>
+        <br>
+
+        <label for="lastName">Last Name</label>
+        <input type="text" id="lastName" required>
+        <br>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" required>
+        <br>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" required>
+        <br>
+
+        <label for="repeatPassword">Repeat Password</label>
+        <input type="password" id="repeatPassword" required>
+        <br>
+
+        <input type="submit" value="Signup">
+    </form>
+
+    <p id="message"></p>
+
+
+    <br>
+    <br>
+
+
+    <script>
+
+        function signup() {
+
+            var firstName = document.getElementById('firstName').value;
+            var lastName = document.getElementById('lastName').value;
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+            var repeatPassword = document.getElementById('repeatPassword').value;
+
+            if (password !== repeatPassword) {
+                document.querySelector("#message").innerHTML = 'Passwords do not match, please try again';
+                return;
+            }
+
+            axios.post('https://serverapi1.herokuapp.com/', {
+
+                firstName,
+                lastName,
+                email,
+                password,
+
+            })
+                .then(function (response) {
+                    console.log(response.data);
+                    document.querySelector("#message").innerHTML = response.data.message;
+                })
+                .catch(function (error) {
+                    console.log(error.response.data);
+                    document.querySelector("#message").innerHTML = error.response.data.message;
+                });
+        }
+
+
+      
+    </script>
+
+
+
+<!-- //1. UNIFORM RESOURSE:
+//==================================
+
+// GET       /user/:userID    to get single user
+// GET       /users           to get all users
+// POST      /user            to create single user
+// POST      /users           to create multiple user
+// PUT       /user:userID     to modify single user
+// PUT       /users           to modify multiple user
+// DELETE    /user:userID     to delete single user
+// DELETE    /users           to delete multipls user
+
+
+
+// GET       /post/:postID    to get single post
+// GET       /posts           to get all posts
+// POST      /post            to create single post
+// POST      /posts           to create multiple posts
+// PUT       /post/:postID    to modify single post
+// PUT       /posts           to modify multiple posts
+// DELETE    /post/:postID    to delete single post
+// DELETE    /posts           to delete multipls posts
+
+
+// GET       /group/:groupID    to get single group
+// GET       /groups            to get all groups
+// POST      /group             to create single group
+// POST      /groups            to create multiple groups
+// PUT       /group/:groupID    to modify single group
+// PUT       /groups            to modify multiple groups
+// DELETE    /group/:postID     to delete single group
+// DELETE    /groups            to delete multipls groups
+
+
+
+
+
+// don't use these
+// GET /get-user
+// POST /create-user
+
+// 2.CLIENT AND SERVER SHOULD BE SEPARATE
+// =================================
+
+// 3.STATE LESS
+// ==============================
+
+// 4.CACHEABLE
+// ===============================
+
+// 5.LAYERED SYSTEM -->
+
+
+
+
+
+
+
+</body>
+</html>
